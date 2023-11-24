@@ -1,0 +1,46 @@
+# Dockerizing postgreSQL database
+
+# not tested yet
+
+services:
+  db:
+    image: postgres:latest
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: admin123
+      POSTGRES_DB: store
+    ports:
+      - 5432:5432
+    volumes:
+      # defining the volume for the database, so that the data is persistent, named xcakes
+      - xcakes:/var/lib/postgresql/data
+  xcake-backend:
+    build: ./docker-xcakes/pastelito-backend
+      #context: ./docker-xcakes/pastelito-backend
+      #dockerfile: Dockerfile
+    ports:
+      - 8080:8080
+    depends_on:
+      - db
+    environment:
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_NAME: store
+      DB_USER: postgres
+      DB_PASSWORD: admin123
+    #volumes:
+      #- ./pastel-backend:/app
+      #- /app/node_modules
+  xcake-frontend:
+    build: ./docker-f-xcakes/x-cakes
+      #context: ./docker-f-xcakes/x-cakes
+      #dockerfile: Dockerfile
+    ports:
+      - 3000:3000
+    depends_on:
+      - xcake-backend
+# declaring the volume so it can be used among other services
+volumes:
+  xcakes:
+
