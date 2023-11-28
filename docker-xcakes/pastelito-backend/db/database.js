@@ -14,7 +14,6 @@ import { config } from '.././src/config/config.js';
 //         native: true,
 //     }
 // );
-
 const connection = new Sequelize(config.dbLink, {
     // linking to the dockerized database container, which is named 'db'
     // not tested yet

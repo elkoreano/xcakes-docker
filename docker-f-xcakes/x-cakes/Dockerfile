@@ -7,7 +7,7 @@ RUN npm install
 COPY . .
 RUN npm run build
 #New test 1
-EXPOSE 3000
+EXPOSE 5173
 CMD ["npm", "run", "dev"]
 
 #FROM nginx:alpine

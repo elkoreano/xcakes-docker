@@ -17,27 +17,26 @@ services:
       - xcakes:/var/lib/postgresql/data
   xcake-backend:
     build: ./docker-xcakes/pastelito-backend
-      #context: ./docker-xcakes/pastelito-backend
-      #dockerfile: Dockerfile
     ports:
-      - 8080:8080
+      - 3000:3000
     depends_on:
       - db
+    env_file: ./.env
     environment:
-      DB_HOST: db
-      DB_PORT: 5432
-      DB_NAME: store
-      DB_USER: postgres
-      DB_PASSWORD: admin123
+      DB_HOST: ${DB_HOST}
+      #DB_PORT: ${DB_PORT}
+      DB_NAME: ${DB_NAME}
+      #DB_USER: ${DB_USER}
+      #DB_PASSWORD: ${DB_PASSWORD}
+      DB_LINK: ${DB_LINK}
+      JWT_SECRET: ${JWT_SECRET}
     #volumes:
       #- ./pastel-backend:/app
       #- /app/node_modules
   xcake-frontend:
     build: ./docker-f-xcakes/x-cakes
-      #context: ./docker-f-xcakes/x-cakes
-      #dockerfile: Dockerfile
     ports:
-      - 3000:3000
+      - 5173:5173
     depends_on:
       - xcake-backend
 # declaring the volume so it can be used among other services
